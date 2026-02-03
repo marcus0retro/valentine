@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine 💖</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  height:100vh;
+  overflow:hidden;
+  font-family:Helvetica,Arial,sans-serif;
+  background:linear-gradient(135deg,#ff9a9e,#fad0c4)
+}
+
+/* ================= SLIDES ================= */
+.slide{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:transform 1.2s ease;
+  z-index:5;
+}
+.slide2,.slide3{transform:translateX(100%)}
+
+/* ================= BACKGROUND EMOJIS ================= */
+.bg-emojis{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  z-index:1; /* BACKGROUND ONLY */
+  pointer-events:none;
+}
+
+.bg-emoji{
+  position:absolute;
+  font-size:22px;
+  opacity:0.35;
+  animation:floatEmoji linear infinite;
+}
+
+@keyframes floatEmoji{
+  0%{
+    transform:translateY(110vh) translateX(0);
+    opacity:0;
+  }
+  10%{opacity:0.35}
+  100%{
+    transform:translateY(-15vh) translateX(40px);
+    opacity:0;
+  }
+}
+
+/* ================= CARD ================= */
+.card{
+  background:rgba(255,255,255,.25);
+  backdrop-filter:blur(10px);
+  padding:40px;
+  border-radius:25px;
+  text-align:center;
+  box-shadow:0 20px 50px rgba(0,0,0,.2);
+  z-index:10;
+}
+
+h1{
+  font-size:2.2rem;
+  color:white;
+  margin-bottom:30px;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{50%{transform:scale(1.05)}}
+
+/* ================= BUTTONS ================= */
+.buttons{
+  display:flex;
+  gap:20px;
+  justify-content:center;
+  position:relative;
+  z-index:10;
+}
+button{
+  border:none;
+  padding:15px 35px;
+  font-size:1.1rem;
+  border-radius:50px;
+  cursor:pointer;
+  transition:.3s;
+}
+#yesBtn{
+  background:linear-gradient(135deg,#ff4d6d,#ff85a1);
+  color:white;
+  box-shadow:0 0 20px #ff4d6d;
+}
+#noBtn{
+  background:white;
+  color:#ff4d6d;
+  position:relative;
+}
+
+/* ================= SLIDE 2 ================= */
+.slide2{
+  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+  flex-direction:column;
+  color:white;
+  text-align:center;
+  position:relative;
+  z-index:5;
+}
+
+.cat-main{
+  font-size:4rem;
+  animation:bounce 1.5s infinite;
+}
+@keyframes bounce{50%{transform:translateY(-10px)}}
+
+.board{
+  margin:20px 0;
+  font-size:1.8rem;
+  background:rgba(255,255,255,.2);
+  padding:15px 25px;
+  border-radius:20px;
+}
+
+/* ================= PHOTO ================= */
+.photo{
+  width:260px;
+  height:260px;
+  object-fit:cover;
+  border-radius:25px;
+  opacity:0;
+  transform:scale(.8);
+  transition:1.5s;
+  box-shadow:0 20px 50px rgba(0,0,0,.4);
+}
+.photo.show{
+  opacity:1;
+  transform:scale(1);
+}
+
+/* ================= CAT KISS EMOJIS ================= */
+.kiss-cat{
+  position:absolute;
+  font-size:2.2rem;
+  animation:floatCat 4s ease-in-out infinite;
+  z-index:8;
+  pointer-events:none;
+}
+
+.kiss-left{bottom:140px;left:20px;font-size:1.9rem}
+.kiss-right{bottom:160px;right:20px}
+.kiss-bottom{bottom:40px;right:20px}
+
+@keyframes floatCat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
+}
+
+/* ================= FINAL SLIDE ================= */
+.slide3{
+  background:linear-gradient(135deg,#ff8fab,#ffb3c6);
+  flex-direction:column;
+  color:white;
+  text-align:center;
+}
+
+.ring{
+  font-size:4rem;
+  animation:pulse 1.5s infinite;
+}
+
+/* ================= CONFETTI ================= */
+.confetti{
+  position:absolute;
+  font-size:20px;
+  animation:confetti 3s linear forwards;
+  z-index:9;
+}
+@keyframes confetti{
+  to{transform:translateY(100vh) rotate(720deg);opacity:0}
+}
+
+/* ================= MUSIC BUTTON ================= */
+.music-btn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:rgba(255,255,255,.85);
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.5rem;
+  cursor:pointer;
+  z-index:20;
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND EMOJIS -->
+<div class="bg-emojis" id="bgEmojis"></div>
+
+<!-- SLIDE 1 -->
+<div class="slide slide1">
+  <div class="card">
+    <h1>Will you be my Valentine? 💘</h1>
+    <div class="buttons">
+      <button id="yesBtn">Yes 💕</button>
+      <button id="noBtn">No 🙃</button>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 2 -->
+<div class="slide slide2">
+
+  <div class="kiss-cat kiss-left">😽💋</div>
+  <div class="kiss-cat kiss-right">😽💋</div>
+  <div class="kiss-cat kiss-bottom">😽💋</div>
+
+  <div class="cat-main">🐱💖</div>
+  <div class="board">
+    YEAHHHH 🎉<br>
+    you're my Valentine bebuuu kuttaaaaa 😽💘
+  </div>
+
+  <img src="photo.jpg" class="photo" id="photoReveal">
+</div>
+
+<!-- SLIDE 3 -->
+<div class="slide slide3">
+  <div class="ring">💍</div>
+  <h1>Will you be mine forever? 💖</h1>
+  <p style="font-size:1.4rem;margin-top:15px">
+    Not just Valentine…<br>but my always 🥹
+  </p>
+</div>
+
+<div class="music-btn" id="musicBtn">⏸️</div>
+
+<script>
+/* BACKGROUND EMOJI SET */
+const bgSet = ["💛","❤️","⭐","😍","💖","💫"];
+const bg = document.getElementById("bgEmojis");
+
+setInterval(()=>{
+  const e = document.createElement("div");
+  e.className="bg-emoji";
+  e.innerHTML = bgSet[Math.floor(Math.random()*bgSet.length)];
+  e.style.left = Math.random()*100 + "vw";
+  e.style.fontSize = 18 + Math.random()*18 + "px";
+  e.style.animationDuration = 10 + Math.random()*10 + "s";
+  bg.appendChild(e);
+  setTimeout(()=>e.remove(),20000);
+},400);
+
+/* BUTTON LOGIC */
+const yesBtn=document.getElementById('yesBtn');
+const noBtn=document.getElementById('noBtn');
+let scale=1;
+function moveNo(){
+  const x=Math.random()*200-100;
+  const y=Math.random()*200-100;
+  noBtn.style.transform=`translate(${x}px,${y}px) rotate(${x}deg)`;
+  scale+=.2;
+  yesBtn.style.transform=`scale(${scale})`;
+}
+noBtn.addEventListener('mouseover',moveNo);
+noBtn.addEventListener('click',moveNo);
+
+/* MUSIC */
+let audio,isPlaying=true;
+function playMusic(){
+  audio=new Audio("music.mp3");
+  audio.volume=0;
+  audio.loop=true;
+  audio.addEventListener("loadedmetadata",()=>{
+    audio.currentTime=5;
+    audio.play();
+    fadeIn();
+  });
+}
+function fadeIn(){
+  let v=0;
+  const f=setInterval(()=>{
+    if(v<.45){v+=.02;audio.volume=v}else clearInterval(f);
+  },200);
+}
+musicBtn.onclick=()=>{
+  if(isPlaying){audio.pause();musicBtn.innerHTML="▶️"}
+  else{audio.play();musicBtn.innerHTML="⏸️"}
+  isPlaying=!isPlaying;
+};
+
+/* CONFETTI */
+function confetti(){
+  for(let i=0;i<60;i++){
+    const c=document.createElement('div');
+    c.className='confetti';
+    c.innerHTML='💖';
+    c.style.left=Math.random()*100+'vw';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3000);
+  }
+}
+
+/* YES SEQUENCE */
+yesBtn.onclick=()=>{
+  document.querySelector('.slide1').style.transform='translateX(-100%)';
+  document.querySelector('.slide2').style.transform='translateX(0)';
+  playMusic();
+  confetti();
+
+  setTimeout(()=>{
+    document.getElementById('photoReveal').classList.add('show');
+    confetti();
+  },6000);
+
+  setTimeout(()=>{
+    document.querySelector('.slide2').style.transform='translateX(-100%)';
+    document.querySelector('.slide3').style.transform='translateX(0)';
+  },12000);
+};
+</script>
+
+</body>
+</html>
